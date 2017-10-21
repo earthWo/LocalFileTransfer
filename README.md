@@ -53,7 +53,7 @@ SocketConnect.get().sendTextMessage(socketId,"消息内容");                   
 
 传输的速度比较慢，而且能够传输的文件较小，这些会在后续版本中解决。
 
-### License
+## License
 
 BSD, part MIT and Apache 2.0. See the [LICENSE](https://github.com/bumptech/glide/blob/master/LICENSE) file for details.
 
