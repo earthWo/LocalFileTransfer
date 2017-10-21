@@ -1,12 +1,8 @@
-## ZFLocalFileTransferLibrary
+## ZFLocalFileTransfer
 
-一个使用socket的连接库，基于socket tcp，自定义传输协议。
+基于自己开发的socket连接库，开发的一款本地传输的软件
 
-demo地址：https://github.com/earthWo/ZFLocalFileTransferService
-
-截图：
-
-![](http://7xjrms.com1.z0.glb.clouddn.com/QQ20171021-204205@2x.png)
+服务端地址：https://github.com/earthWo/ZFLocalFileTransferService
 
 ### 使用方法：
 
