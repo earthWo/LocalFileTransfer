@@ -1,0 +1,17 @@
+package proto;
+
+option java_package = "whitelife.win.socketlibrary";
+option java_outer_classname = "SocketDataProtos";
+
+
+message SocketData{
+
+    required string messageType = 1;
+
+    required int32 messageId=2;
+
+    required string text=3;
+
+    required bytes data=4;
+
+}

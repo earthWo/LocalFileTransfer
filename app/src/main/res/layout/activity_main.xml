@@ -19,7 +19,7 @@
         android:id="@+id/et_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="192.168.2.101"
+        android:text="192.168.142.217"
         android:layout_marginTop="10dp"/>
 
 

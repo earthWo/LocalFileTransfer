@@ -1,17 +1,17 @@
 package whitelife.win.socketlibrary.con;
 
-import android.util.Log;
+import com.google.protobuf.ByteString;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
+
+import whitelife.win.socketlibrary.SocketDataProtos;
 import whitelife.win.socketlibrary.callback.MessageType;
 import whitelife.win.socketlibrary.callback.SocketDataType;
 import whitelife.win.socketlibrary.exception.SocketException;
-import whitelife.win.socketlibrary.message.SocketData;
 import whitelife.win.socketlibrary.message.SocketMessage;
 import whitelife.win.socketlibrary.utils.ByteUtil;
 
@@ -92,7 +92,15 @@ public class SocketMessageSender {
 
     private byte[][] getBytesByMessage(SocketMessage message){
         byte[][]ms;
-        byte[]messageByte=new SocketData(message).toByteArray();
+
+
+        SocketDataProtos.SocketData socketData=SocketDataProtos.SocketData.newBuilder()
+                .setMessageId(message.getMessageId())
+                .setMessageType(message.getMessageType())
+                .setText(message.getText())
+                .setData(ByteString.copyFrom(message.getData()))
+                .build();
+        byte[]messageByte=socketData.toByteArray();
         int messageLength=messageByte.length;
         //普通消息
         if(message.getMessageType()!= SocketDataType.MH){

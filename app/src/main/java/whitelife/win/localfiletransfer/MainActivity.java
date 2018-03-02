@@ -4,30 +4,23 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 
 import java.io.File;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import whitelife.win.socketlibrary.callback.MessageCallback;
 import whitelife.win.socketlibrary.callback.SocketCallback;
 import whitelife.win.socketlibrary.con.SocketConnect;
 import whitelife.win.socketlibrary.config.SocketConfig;
 import whitelife.win.socketlibrary.exception.SocketException;
-import whitelife.win.socketlibrary.message.SocketFileMessage;
-import whitelife.win.socketlibrary.message.SocketImageMessage;
 import whitelife.win.socketlibrary.message.SocketMessage;
 import whitelife.win.socketlibrary.message.SocketTextMessage;
 
@@ -100,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
                                 .show();
                     }
 
-                }else if(message instanceof SocketFileMessage){
-                    FileUtil.saveFile(message.getData(),((SocketFileMessage) message).getFileName());
+                }else{
+
                 }
             }
 

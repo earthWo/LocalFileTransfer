@@ -121,7 +121,6 @@ public class SocketHelper {
         }
     }
 
-
     public void sendVoiceMessage(int messageId,String filePath){
         if(mSocket!=null) {
             SocketVoiceMessage socketMessage = new SocketVoiceMessage();
@@ -136,7 +135,7 @@ public class SocketHelper {
                     throw new SocketException(e.getMessage());
                 }
             }
-            socketMessage.setVoiceName(filePath.substring(filePath.lastIndexOf("/")+1));
+            socketMessage.setText(filePath.substring(filePath.lastIndexOf("/")+1));
             SocketMessageSender.get().addMessage(socketMessage);
         }
     }
@@ -155,7 +154,7 @@ public class SocketHelper {
                     throw new SocketException(e.getMessage());
                 }
             }
-            socketMessage.setVedioName(filePath.substring(filePath.lastIndexOf("/")+1));
+            socketMessage.setText(filePath.substring(filePath.lastIndexOf("/")+1));
             SocketMessageSender.get().addMessage(socketMessage);
         }
     }
@@ -174,7 +173,7 @@ public class SocketHelper {
                     throw new SocketException(e.getMessage());
                 }
             }
-            socketMessage.setImageName(filePath.substring(filePath.lastIndexOf("/")+1));
+            socketMessage.setText(filePath.substring(filePath.lastIndexOf("/")+1));
             SocketMessageSender.get().addMessage(socketMessage);
         }
     }
@@ -193,7 +192,7 @@ public class SocketHelper {
                     SocketHelper.getInstance().getDefaultCallback().requestError(socketMessage,new SocketException(e.getMessage()));
                 }
             }
-            socketMessage.setFileName(filePath.substring(filePath.lastIndexOf("/")+1));
+            socketMessage.setText(filePath.substring(filePath.lastIndexOf("/")+1));
             SocketMessageSender.get().addMessage(socketMessage);
         }
     }
@@ -204,10 +203,10 @@ public class SocketHelper {
             socketMessage.setMessageId(messageId);
             socketMessage.setData("这是一个心跳".getBytes());
             socketMessage.setMessageType(MessageType.MH);
+            socketMessage.setText("这是一个心跳");
             SocketMessageSender.get().addMessage(socketMessage);
         }
     }
-
 
     public void disConnected(){
         if(mSocketCallback!=null){
@@ -215,15 +214,17 @@ public class SocketHelper {
         }
     }
 
+    public SocketCallback getSocketCallback() {
+        return mSocketCallback;
+    }
 
-    public void sendMessageError(SocketMessage message,SocketException e){
+    public void sendMessageError(SocketMessage message, SocketException e){
         if(message!=null){
             MessageCallback callback= CallbackSet.get().getCallback(message.getMessageId());
             if(callback!=null){
                 callback.requestError(message, e);
             }
         }
-
     }
 
     private class ConnectThread extends Thread{
@@ -242,6 +243,7 @@ public class SocketHelper {
                 } catch (IOException e) {
                     e.printStackTrace();
                     connectFailure(e);
+                    mSocket=null;
                 }
             }else{
                 if(mSocketCallback!=null){
@@ -250,7 +252,6 @@ public class SocketHelper {
             }
         }
     }
-
 
     public Handler getHandler() {
         return mHandler;

@@ -1,8 +1,7 @@
 package whitelife.win.socketlibrary.message;
 
 
-import com.alibaba.fastjson.JSON;
-
+import whitelife.win.socketlibrary.SocketDataProtos;
 import whitelife.win.socketlibrary.callback.MessageType;
 
 /**
@@ -11,22 +10,13 @@ import whitelife.win.socketlibrary.callback.MessageType;
 
 public class SocketFileMessage extends SocketMessage{
 
-    private String fileName;
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     public SocketFileMessage() {
         setMessageType(MessageType.MF);
     }
 
-    @Override
-    public byte[] toByteArray() {
-       return JSON.toJSONBytes(this);
+    public SocketFileMessage(SocketDataProtos.SocketData socketData) {
+        this();
+        setSocketData(socketData);
     }
+
 }

@@ -70,7 +70,6 @@ public class ByteUtil {
 
 
     public static byte[] fileToByte(String filePath) throws IOException {
-        byte[] buffer = null;
         File file = new File(filePath);
         FileInputStream fis = new FileInputStream(file);
         ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
@@ -81,8 +80,7 @@ public class ByteUtil {
         }
         fis.close();
         bos.close();
-        buffer = bos.toByteArray();
-        return buffer;
+        return bos.toByteArray();
     }
 
 

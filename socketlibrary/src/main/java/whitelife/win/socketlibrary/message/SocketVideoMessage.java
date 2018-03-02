@@ -3,6 +3,7 @@ package whitelife.win.socketlibrary.message;
 
 import com.alibaba.fastjson.JSON;
 
+import whitelife.win.socketlibrary.SocketDataProtos;
 import whitelife.win.socketlibrary.callback.MessageType;
 
 /**
@@ -11,22 +12,13 @@ import whitelife.win.socketlibrary.callback.MessageType;
 
 public class SocketVideoMessage extends SocketMessage{
 
-    private String vedioName;
-
-    public String getVedioName() {
-        return vedioName;
-    }
-
-    public void setVedioName(String vedioName) {
-        this.vedioName = vedioName;
-    }
-
     public SocketVideoMessage() {
         setMessageType(MessageType.MM);
     }
 
-    @Override
-    public byte[] toByteArray() {
-       return JSON.toJSONBytes(this);
+    public SocketVideoMessage(SocketDataProtos.SocketData socketData) {
+        this();
+        setSocketData(socketData);
     }
+
 }

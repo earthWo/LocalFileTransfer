@@ -10,6 +10,8 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import whitelife.win.socketlibrary.exception.SocketException;
+
 /**
  * Created by wuzefeng on 2017/10/13.
  */
@@ -92,8 +94,10 @@ public class SocketMessageReceiver {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                SocketHelper.getInstance().disConnected();
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                SocketHelper.getInstance().disConnected();
             }
         }
 

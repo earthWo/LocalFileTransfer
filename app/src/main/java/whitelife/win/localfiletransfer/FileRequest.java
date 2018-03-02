@@ -1,5 +1,9 @@
 package whitelife.win.localfiletransfer;
 
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
 /**
  * Created by wuzefeng on 2017/10/21.
  */

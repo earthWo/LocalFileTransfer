@@ -5,9 +5,11 @@ import android.os.Message;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.google.protobuf.InvalidProtocolBufferException;
+
+import whitelife.win.socketlibrary.SocketDataProtos;
 import whitelife.win.socketlibrary.callback.MessageType;
 import whitelife.win.socketlibrary.callback.SocketDataType;
-import whitelife.win.socketlibrary.message.SocketData;
 import whitelife.win.socketlibrary.message.SocketFileMessage;
 import whitelife.win.socketlibrary.message.SocketImageMessage;
 import whitelife.win.socketlibrary.message.SocketMessage;
@@ -342,28 +344,32 @@ public class SocketDataParse {
         byte[] msg=ByteUtil.cutBytes(bytes,6,bytes.length);
         String type=new String(ByteUtil.cutBytes(bytes,0,2));
         if(!SocketDataType.MH.equals(type)){
-            SocketData data= JSON.parseObject(msg,SocketData.class);
-            SocketMessage message = null;
-            //文本消息
-            if(MessageType.MT.equals(data.getMessageType())){
-                message=JSON.<SocketTextMessage>parseObject(data.getData(),SocketTextMessage.class);
-            }else if(MessageType.MV.equals(data.getMessageType())){
-                //音频数据
-                message=JSON.<SocketVoiceMessage>parseObject(data.getData(),SocketVoiceMessage.class);
-            }else if(MessageType.MM.equals(data.getMessageType())){
-                //音频数据
-                message=JSON.<SocketVideoMessage>parseObject(data.getData(),SocketVideoMessage.class);
-            }else if(MessageType.MP.equals(data.getMessageType())){
-                //图片数据
-                message=JSON.<SocketImageMessage>parseObject(data.getData(),SocketImageMessage.class);
-            }else if(MessageType.MF.equals(data.getMessageType())){
-                //图片数据
-                message=JSON.<SocketImageMessage>parseObject(data.getData(),SocketFileMessage.class);
+            try {
+                SocketDataProtos.SocketData data= SocketDataProtos.SocketData.parseFrom(msg);
+                SocketMessage message = null;
+                //文本消息
+                if(MessageType.MT.equals(data.getMessageType())){
+                    message=new SocketTextMessage(data);
+                }else if(MessageType.MV.equals(data.getMessageType())){
+                    //音频数据
+                    message=new SocketVoiceMessage(data);
+                }else if(MessageType.MM.equals(data.getMessageType())){
+                    //音频数据
+                    message=new SocketVideoMessage(data);
+                }else if(MessageType.MP.equals(data.getMessageType())){
+                    //图片数据
+                    message=new SocketImageMessage(data);
+                }else if(MessageType.MF.equals(data.getMessageType())){
+                    //图片数据
+                    message=new SocketFileMessage(data);
+                }
+                Message m=new Message();
+                m.obj=message;
+                m.what=100;
+                SocketHelper.getInstance().getHandler().sendMessage(m);
+            } catch (InvalidProtocolBufferException e) {
+                e.printStackTrace();
             }
-            Message m=new Message();
-            m.obj=message;
-            m.what=100;
-            SocketHelper.getInstance().getHandler().sendMessage(m);
         }
 
 

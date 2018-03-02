@@ -2,6 +2,7 @@ package whitelife.win.socketlibrary.message;
 
 import java.io.Serializable;
 
+import whitelife.win.socketlibrary.SocketDataProtos;
 import whitelife.win.socketlibrary.callback.MessageType;
 
 /**
@@ -16,6 +17,8 @@ public abstract class SocketMessage implements Serializable {
     private String messageType;
 
     private byte[] data;
+
+    private String text;
 
     public int getMessageId() {
         return messageId;
@@ -41,8 +44,18 @@ public abstract class SocketMessage implements Serializable {
         this.data = data;
     }
 
+    public String getText() {
+        return text;
+    }
 
-    public abstract byte[] toByteArray ();
+    public void setText(String text) {
+        this.text = text;
+    }
 
 
+    public void setSocketData(SocketDataProtos.SocketData socketData){
+        setData(socketData.getData().toByteArray());
+        setMessageId(socketData.getMessageId());
+        setText(socketData.getText());
+    }
 }

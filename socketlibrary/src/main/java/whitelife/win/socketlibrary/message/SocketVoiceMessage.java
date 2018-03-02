@@ -1,11 +1,6 @@
 package whitelife.win.socketlibrary.message;
 
-
-import com.alibaba.fastjson.JSON;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import whitelife.win.socketlibrary.SocketDataProtos;
 import whitelife.win.socketlibrary.callback.MessageType;
 
 /**
@@ -14,23 +9,12 @@ import whitelife.win.socketlibrary.callback.MessageType;
 
 public class SocketVoiceMessage extends SocketMessage{
 
-    private String voiceName;
-
-
-    public String getVoiceName() {
-        return voiceName;
-    }
-
-    public void setVoiceName(String voiceName) {
-        this.voiceName = voiceName;
-    }
-
     public SocketVoiceMessage() {
         setMessageType(MessageType.MV);
     }
 
-    @Override
-    public byte[] toByteArray() {
-       return JSON.toJSONBytes(this);
+    public SocketVoiceMessage(SocketDataProtos.SocketData socketData) {
+        this();
+        setSocketData(socketData);
     }
 }
